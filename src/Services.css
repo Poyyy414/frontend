@@ -46,26 +46,58 @@
   gap: 20px;
 }
 
-/* Main Content Container */
-.container-services {
-  padding: 50px 30px;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8); /* Light background for content */
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  margin-top: 100px;
-}
 
-.container-services h1 {
-  font-size: 2rem;
-  color: #002f5e;
+
+
+.form-group-services {
   margin-bottom: 20px;
 }
 
+
+
+button {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background: #003f7f;
+  transform: translateY(-2px); /* Adds a subtle lift effect */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design Enhancements */
+@media (max-width: 768px) {
+.navbar-brand-services {
+  font-size: 1.5rem;
+}
+
+.navbar-links-services {
+
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.form-group-services {
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 20px;
+}
+}
 form {
   max-width: 600px;
   margin: 0 auto;
-  background: white;
+  background: #fff;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -80,11 +112,12 @@ label {
   color: #333;
   display: block;
   margin-bottom: 8px;
+  font-size: 1rem;
 }
 
 select, input[type="date"], input[type="checkbox"] {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
@@ -114,23 +147,69 @@ button:hover {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive Design Enhancements */
-@media (max-width: 768px) {
-.navbar-brand-services {
-  font-size: 1.5rem;
-}
-
-.navbar-links-services {
-  flex-direction: column;
-  gap: 10px;
+/* Flight Deals Section */
+.container {
+  padding: 40px;
   text-align: center;
+  margin-top: 40px;
 }
 
-.form-group-services {
-  margin-bottom: 15px;
+.title {
+  font-size: 2.5rem;
+  color: #002f5e;
+  margin-bottom: 30px;
 }
 
-button {
+.deals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+}
+
+.deal {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 250px;
+  padding: 20px;
+  text-align: left;
+}
+
+.deal-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0056b3;
+}
+
+.deal-header h3 {
+  color: #ff8c00; /* Price color */
+}
+
+.deal-details ul {
+  padding-left: 20px;
+  list-style-type: none;
+}
+
+.deal-details img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.search-button {
+  background-color: #0056b3;
+  color: white;
   padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
+
+.search-button:hover {
+  background-color: #003f7f;
 }
