@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import axios from 'axios';  
 
-import 'bootstrap/dist/css/bootstrap.css';  
+import 'bootstrap/dist/css/bootstrap.min.css';  // Make sure Bootstrap is included
 import './Login.css'; // Custom CSS if needed
 
 import Container from 'react-bootstrap/Container';  
-import Navbar from 'react-bootstrap/Navbar';
+import Navbar from 'react-bootstrap/Navbar';  // Importing Navbar component
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';  
 import Col from 'react-bootstrap/Col';  
 import Button from 'react-bootstrap/Button';  
+import Spinner from 'react-bootstrap/Spinner';  // Import Spinner for loading effect
 
 import logo from './assets/logo.png'; // Path to your logo image
-import bg from './assets/background.gif'; // Path to your background image
+import bg from './assets/background-login.jpg'; // Path to your background image
 import { API_ENDPOINT } from './Api.jsx';  
 
 function Login() {  
@@ -40,9 +41,11 @@ function Login() {
   const [username, setUsername] = useState('');  
   const [password, setPassword] = useState('');  
   const [error, setError] = useState('');  
+  const [loading, setLoading] = useState(false);  // Add loading state
 
   const handleSubmit = async (e) => {  
     e.preventDefault();  
+    setLoading(true);  // Start loading when form is submitted
 
     try {  
       const response = await axios.post(`${API_ENDPOINT}/auth/login`, {  
@@ -54,13 +57,15 @@ function Login() {
       navigate('/dashboard');  
     } catch (error) {  
       setError('Invalid username or password');  
+    } finally {
+      setLoading(false);  // Stop loading after response
     }  
   };
 
   return ( 
     <>
       {/* Navbar */}
-      <Navbar bg="primary" variant="dark" className="custom-navbar">
+      <Navbar className="custom-navbar">
         <Container>
           <Navbar.Brand href="#home">
             <img src={logo} alt="Logo" className="logo" width="50" />
@@ -81,7 +86,6 @@ function Login() {
                 <div className="login-logo">
                   <center>
                     <h2>Airline Booking Based System</h2>
-                  
                   </center>
                 </div>
                 <div className="card">
@@ -115,13 +119,17 @@ function Login() {
                       <Form.Group controlId="formButton">
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                         <Button
-                          variant="success"
-                          className="btn btn-block bg-custom btn-flat rounded-0"
+                          className="btn btn-block bg-custom btn-flat rounded-0 dark-blue-btn"
                           size="sm"
                           block
                           type="submit"
+                          disabled={loading}  // Disable button while loading
                         >
-                          Login
+                          {loading ? (
+                            <Spinner animation="border" size="sm" />  // Show spinner when loading
+                          ) : (
+                            'Login'
+                          )}
                         </Button>
                       </Form.Group>
                     </Form>

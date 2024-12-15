@@ -1,11 +1,32 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // For navigation
+import { Link } from "react-router-dom";
 import './Services.css';
 import airport from './assets/airport.jpg'; // Ensure this path is correct
 import logo from './assets/logo.png';
+import airasia from './assets/AirAsia.jpg'; // Corrected image path
+import Swal from 'sweetalert2'; // Import SweetAlert2
+import baggage from './assets/baggage.jpg';
+import checkin from './assets/check-in.jpg';
+import travelInsurance from './assets/travel-insurance.jpg';
+
+const FlightCard = ({ route, departDate, departTime, returnDate, returnTime, price, airlineLogo, isCheapest, isQuickest, buttonLabel, onBook }) => {
+  return (
+    <div className="flight-card">
+      <img src={airlineLogo} alt="Airline Logo" className="airline-logo" />
+      <div className="flight-info">
+        <h3>{route}</h3>
+        <p>Departure: {departDate} | {departTime}</p>
+        <p>Return: {returnDate} | {returnTime}</p>
+        <p>Price: {price}</p>
+        {isCheapest && <span className="badge cheapest">Cheapest</span>}
+        {isQuickest && <span className="badge quickest">Quickest</span>}
+      </div>
+      <button className="flight-button" onClick={onBook}>{buttonLabel}</button>
+    </div>
+  );
+};
 
 const Services = () => {
-  // Rename state variables to avoid conflicts with dashboard.jsx
   const [departureCity, setDepartureCity] = useState("Cagayan de Oro (CGY)");
   const [arrivalCity, setArrivalCity] = useState("Cebu City (CEB)");
   const [departureDate, setDepartureDate] = useState("2024-12-18");
@@ -14,6 +35,17 @@ const Services = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (departureCity === arrivalCity) {
+      alert("Departure and arrival cities cannot be the same.");
+      return;
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Flight Search Submitted',
+      text: `Confirmed flights from ${departureCity} to ${arrivalCity} for ${departureDate} to ${returnDate}`,
+    });
+
     console.log("Flight search submitted!", {
       departureCity,
       arrivalCity,
@@ -21,148 +53,213 @@ const Services = () => {
       returnDate,
       onlyDirectFlights,
     });
-    // TODO: Implement logic to search for flights based on the form data
+  };
+
+  const flights = [
+    {
+      route: 'Manila  ✈︎ Cebu City',
+      departDate: 'Tue 1/21',
+      departTime: '3:35 pm-5:05 pm',
+      returnDate: 'Sun 2/16',
+      returnTime: '12:20 am-1:45 am',
+      price: 'P2,506',
+      airlineLogo: airasia,
+      isCheapest: true,
+      isQuickest: false,
+      buttonLabel: 'Book Now'
+    },
+    {
+      route: 'Calabanga ✈︎ Jupiter',
+      departDate: 'Sat 1/25',
+      departTime: '4:00 am - 5:30 am',
+      returnDate: 'Wed 1/29',
+      returnTime: '1:45 pm - 3:05 pm',
+      price: 'P1,000,000',
+      airlineLogo: airasia,
+      isCheapest: false,
+      isQuickest: true,
+      buttonLabel: 'Book Now'
+    },
+    {
+      route: 'Calabanga ✈︎ North Korea',
+      departDate: 'Sat 1/25',
+      departTime: '4:00 am - 5:30 am',
+      returnDate: 'Wed 1/29',
+      returnTime: '1:45 pm - 3:05 pm',
+      price: 'Free',
+      airlineLogo: airasia,
+      isCheapest: false,
+      isQuickest: true,
+      buttonLabel: 'Book Now'
+    },
+    {
+      route: 'Calabanga ✈︎ Universe 13 ',
+      departDate: 'Sat 1/25',
+      departTime: '4:00 am - 5:30 am',
+      returnDate: 'Wed 1/29',
+      returnTime: '1:45 pm - 3:05 pm',
+      price: 'P1,000,000,000',
+      airlineLogo: airasia,
+      isCheapest: false,
+      isQuickest: true,
+      buttonLabel: 'Book Now'
+    },
+
+    {
+      route: 'Calabanga ✈︎ Universe 13 ',
+      departDate: 'Sat 1/25',
+      departTime: '4:00 am - 5:30 am',
+      returnDate: 'Wed 1/29',
+      returnTime: '1:45 pm - 3:05 pm',
+      price: 'P1,000,000,000',
+      airlineLogo: airasia,
+      isCheapest: false,
+      isQuickest: true,
+      buttonLabel: 'Book Now'
+    },
+
+    {
+      route: 'Calabanga ✈︎ Universe 13 ',
+      departDate: 'Sat 1/25',
+      departTime: '4:00 am - 5:30 am',
+      returnDate: 'Wed 1/29',
+      returnTime: '1:45 pm - 3:05 pm',
+      price: 'P1,000,000,000',
+      airlineLogo: airasia,
+      isCheapest: false,
+      isQuickest: true,
+      buttonLabel: 'Book Now'
+    },
+  ];
+
+  const services = [
+    {
+      name: 'Extra Luggage',
+      price: 'P500',
+      description: 'Add extra luggage allowance to your flight.',
+      buttonLabel: 'Add Service',
+      image: baggage,  // Image added here
+    },
+    {
+      name: 'Priority Check-in',
+      price: 'P300',
+      description: 'Skip the lines with priority check-in service.',
+      buttonLabel: 'Add Service',
+      image: checkin,  // Image added here
+    },
+    {
+      name: 'Travel Insurance',
+      price: 'P1,000',
+      description: 'Protect your trip with travel insurance.',
+      buttonLabel: 'Add Service',
+      image: travelInsurance,  // Image added here
+    },
+  ];
+
+  const handleBooking = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Booking Successful',
+      text: 'Your flight has been booked successfully!',
+    });
+  };
+
+  const handleServiceAdd = (serviceName) => {
+    Swal.fire({
+      icon: 'info',
+      title: 'Service Added',
+      text: `You have added the service: ${serviceName}`,
+    });
   };
 
   return (
     <div>
       <nav className="navbar-services">
         <div className="navbar-container-services">
-          <img src={logo} alt="Logo-services" width="5%" className="me-2" />
+          <img src={logo} alt="Logo" width="50" className="navbar-logo" />
           <Link to="/" className="navbar-brand-services">Ampoy's Airline</Link>
           <div className="navbar-links-services">
-            <Link to="/dashboard" className="navbar-link-services">Dashboard</Link>
-            <Link to="/services" className="navbar-link-services">Services</Link>
-            <Link to="#contact" className="navbar-link-services">Contact</Link>
-            <Link to="#about_us" className="navbar-link-services">About Us</Link>
+            <Link to="/dashboard" className="navbar-link-services">💻Dashboard</Link>
+            <Link to="/servies" className="navbar-link-services active">📝Services</Link>
+            <Link to="/home" className="navbar-link-services">🏠︎Home</Link>
+            <Link to="/contact" className="navbar-link-services">📞 Contact</Link>
+            
           </div>
         </div>
       </nav>
 
-      {/* Background image div */}
       <div className="dashboard-background"></div>
 
       <div className="container-services">
         <h1>Welcome, Choose your services and enjoy!!</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group-services">
-            <label htmlFor="departureCity">Departure:</label>
-            <select
-              id="departureCity"
+        <form onSubmit={handleSubmit} className="services-form">
+          <label>
+            Departure City:
+            <input
+              type="text"
               value={departureCity}
               onChange={(e) => setDepartureCity(e.target.value)}
-            >
-              <option value="Cagayan de Oro (CGY)">Cagayan de Oro (CGY)</option>
-              <option value="Manila (MNL)">Manila (MNL)</option>
-              <option value="Davao City (DVO)">Davao City (DVO)</option>
-              <option value="Iloilo City (ILO)">Iloilo City (ILO)</option>
-              <option value="Dumaguete City (DGT)">Dumaguete City (DGT)</option>
-              <option value="Calabanga">Calabanga (CLB)</option>
-            </select>
-          </div>
-          <div className="form-group-services">
-            <label htmlFor="arrivalCity">Arrival:</label>
-            <select
-              id="arrivalCity"
+            />
+          </label>
+          <label>
+            Arrival City:
+            <input
+              type="text"
               value={arrivalCity}
               onChange={(e) => setArrivalCity(e.target.value)}
-            >
-              <option value="Cebu City (CEB)">Cebu City (CEB)</option>
-              <option value="Manila (MNL)">Manila (MNL)</option>
-              <option value="Davao City (DVO)">Davao City (DVO)</option>
-              <option value="Iloilo City (ILO)">Iloilo City (ILO)</option>
-              <option value="Dumaguete City (DGT)">Dumaguete City (DGT)</option>
-              <option value="Calabanga">Calabanga (CLB)</option>
-            </select>
-          </div>
-          <div className="form-group-services">
-            <label htmlFor="departureDate">Departure Date:</label>
+            />
+          </label>
+          <label>
+            Departure Date:
             <input
               type="date"
-              id="departureDate"
               value={departureDate}
               onChange={(e) => setDepartureDate(e.target.value)}
             />
-          </div>
-          <div className="form-group-services">
-            <label htmlFor="returnDate">Return Date:</label>
+          </label>
+          <label>
+            Return Date:
             <input
               type="date"
-              id="returnDate"
               value={returnDate}
               onChange={(e) => setReturnDate(e.target.value)}
             />
-          </div>
-          <div className="form-group-services">
-            <label htmlFor="onlyDirectFlights">Direct Flights Only:</label>
+          </label>
+          <label>
+            Direct Flights Only:
             <input
               type="checkbox"
-              id="onlyDirectFlights"
               checked={onlyDirectFlights}
-              onChange={() => setOnlyDirectFlights(!onlyDirectFlights)}
+              onChange={(e) => setOnlyDirectFlights(e.target.checked)}
             />
-          </div>
-          <button type="submit">Search Flights</button>
+          </label>
+          <button type="submit">Confirm Flight</button>
         </form>
       </div>
 
+      {/* Flight Listing Section */}
       <div className="container">
-        <h1 className="title">Cheap flight deals from Daraga to Cebu</h1>
+        <h1 className="title-1">Flight Deals</h1>
         <div className="deals">
-          <div className="deal">
-            <div className="deal-header">
-              <h2>Round-trip from</h2>
-              <h3>₱2,494</h3>
+          {flights.map((flight, index) => (
+            <FlightCard key={index} {...flight} onBook={handleBooking} />
+          ))}
+        </div>
+      </div>
+
+      {/* Services Section */}
+      <div className="container">
+        <h1 className="title">Additional Services</h1>
+        <div className="services">
+          {services.map((service, index) => (
+            <div className="service-card" key={index}>
+              <img src={service.image} alt={service.name} className="service-image" />  {/* Display the image here */}
+              <h3>{service.name}</h3>
+              <p>{service.description}</p>
+              <p>Price: {service.price}</p>
+              <button onClick={() => handleServiceAdd(service.name)}>{service.buttonLabel}</button>
             </div>
-            <div className="deal-details">
-              <img src="https://i.imgur.com/n8q4b2c.png" alt="Air Asia logo" />
-              <ul>
-                <li>Philippines AirAsia</li>
-                <li>1/8-1/30</li>
-                <li>Nonstop</li>
-                <li>2h 40m total</li>
-                <li>Manila to Cebu City</li>
-              </ul>
-            </div>
-            <button className="search-button">Search Deals</button>
-          </div>
-          <div className="deal">
-            <div className="deal-header">
-              <h2>One-way from</h2>
-              <h3>₱1,218</h3>
-            </div>
-            <div className="deal-details">
-              <img src="https://i.imgur.com/n8q4b2c.png" alt="Air Asia logo" />
-              <ul>
-                <li>Philippines AirAsia</li>
-                <li>1/22</li>
-                <li>Nonstop</li>
-                <li>1h 20m total</li>
-                <li>Manila to Cebu</li>
-              </ul>
-            </div>
-            <button className="search-button">Search Deals</button>
-          </div>
-          <div className="deal">
-            <div className="deal-header">
-              <h2>Popular in</h2>
-              <h3>December</h3>
-            </div>
-            <div className="deal-details">
-              <p>High demand for flights, 0% potential price rise</p>
-            </div>
-            <button className="search-button">Search Deals</button>
-          </div>
-          <div className="deal">
-            <div className="deal-header">
-              <h2>Last-minute deals</h2>
-              <h3>Check availability</h3>
-            </div>
-            <div className="deal-details">
-              <p>Explore flights departing soon with great discounts</p>
-            </div>
-            <button className="search-button">Search Deals</button>
-          </div>
+          ))}
         </div>
       </div>
     </div>

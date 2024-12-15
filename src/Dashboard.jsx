@@ -21,7 +21,7 @@ import Modal from 'react-bootstrap/Modal';
 function Dashboard() {  
 
   const [user, setUser] = useState(null);  
-  const [userData, setUserData] = useState(null);  // New state for user data
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();  
 
   /* Verify if User In-Session in LocalStorage */  
@@ -32,8 +32,8 @@ function Dashboard() {
         
         // Decode the token and store the user data
         const decoded_token = jwtDecode(response.data.token);
-        setUserData(response.data);  // Store the original user data
-        setUser(decoded_token);  // Store only the decoded token info
+        setUserData(response.data);  
+        setUser(decoded_token);  
 
       } catch (error) {  
         navigate('/login');  
@@ -41,42 +41,42 @@ function Dashboard() {
     };  
 
     fetchDecodedUserID();  
-  }, []);  
+  }, [navigate]);  
 
   /* Performs Logout Method */  
   const handleLogout = async () => {  
-
     try {  
       localStorage.removeItem('token');  
       navigate('/login');  
-
     } catch (error) {  
       console.error('Logout failed:', error);  
     }  
   };  
 
-  // 1.: DISPLAY USERS  
+  // DISPLAY USERS  
   const [users, setUsers] = useState([]);  
-  const token = userData ? userData.token : null;  // Get token from userData
+  const token = userData ? userData.token : null;  
 
   const headers = {  
     accept: 'application/json',  
     Authorization: token  
-  }  
-
-  useEffect(() => {  
-    fetchUsers()  
-  }, [token])  // Add token as dependency
-
-  const fetchUsers = async () => {  
-    await axios.get(`${API_ENDPOINT}/user`, { headers: headers }).then(({data}) => {  
-      setUsers(data);  
-    });  
   };  
 
-  /* 2. DELETE USER */  
-  const deleteUser = async (id) => {  
+  useEffect(() => {  
+    if (token) fetchUsers();
+  }, [token]);  
 
+  const fetchUsers = async () => {  
+    try {
+      const { data } = await axios.get(`${API_ENDPOINT}/user`, { headers });
+      setUsers(data);  
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }  
+  };  
+
+  /* DELETE USER */  
+  const deleteUser = async (id) => {  
     const isConfirm = await Swal.fire({  
       title: 'Are you sure?',  
       text: "You won't be able to revert this!",  
@@ -85,35 +85,31 @@ function Dashboard() {
       confirmButtonColor: '#3085d6',  
       cancelButtonColor: '#d33',  
       confirmButtonText: 'Yes, delete it!'  
-    }).then((result) => {  
-      return result.isConfirmed;  
-    });  
+    }).then((result) => result.isConfirmed);  
 
-    if (!isConfirm) {  
-      return;  
-    }  
+    if (!isConfirm) return;  
 
-    await axios.delete(`${API_ENDPOINT}/user/${id}`, { headers: headers }).then(({ data }) => {  
+    try {
+      await axios.delete(`${API_ENDPOINT}/user/${id}`, { headers });
       Swal.fire({  
         icon: "success",  
         text: "Successfully Deleted"
       });
       fetchUsers();
-    }).catch(({ response: { data } }) => {  
+    } catch (error) {
       Swal.fire({  
-        text: data.message,  
-        icon: "error"
-      });
-    });
+        text: error.response?.data?.message || "An error occurred",  
+        icon: "error"  
+      });  
+    }
   };
 
-  /* 3. UPDATE USER */  
+  /* CREATE USER */  
   const [show, setShow] = useState(false);  
   const [fullname, setFullname] = useState("");  
   const [username, setUsername] = useState("");  
   const [password, setPassword] = useState("");  
   const [validationError, setValidationError] = useState({});  
-  const [isUpdating, setIsUpdating] = useState(false);  
   const [currentUserId, setCurrentUserId] = useState(null);  
 
   const handleClose = () => {  
@@ -125,12 +121,9 @@ function Dashboard() {
     if (user) {  
       setFullname(user.fullname);  
       setUsername(user.username);  
-      setPassword('');  
       setCurrentUserId(user.user_id);  
-      setIsUpdating(true);  
     } else {  
       resetForm();  
-      setIsUpdating(false);  
     }  
     setShow(true);  
   };
@@ -147,18 +140,12 @@ function Dashboard() {
     e.preventDefault();  
 
     const payload = { fullname, username, password };  
-    const endpoint = `${API_ENDPOINT}/user${isUpdating ? `/${currentUserId}` : ''}`;  
-    const method = isUpdating ? 'put' : 'post';  
 
     try {  
-      const response = await axios.post(`${API_ENDPOINT}/auth/register`, {
-        fullname,
-        username,
-        password,
-      });  
+      await axios.post(`${API_ENDPOINT}/user`, payload, { headers });  
       Swal.fire({  
         icon: "success",  
-        text: isUpdating ? "Successfully Updated" : "Successfully Added"  
+        text: "Successfully Added"  
       });  
       fetchUsers();  
       handleClose();  
@@ -174,44 +161,75 @@ function Dashboard() {
     }  
   };
 
-  /* Read Users */
+  /* UPDATE USER */  
+  const updateUser = async (e) => {  
+    e.preventDefault();  
+
+    const payload = { fullname, username, password };  
+
+    try {  
+      await axios.put(`${API_ENDPOINT}/user/${currentUserId}`, payload, { headers });  
+      Swal.fire({  
+        icon: "success",  
+        text: "Successfully Updated"  
+      });  
+      fetchUsers();  
+      handleClose();  
+    } catch (error) {  
+      if (error.response && error.response.status === 422) {  
+        setValidationError(error.response.data.errors);  
+      } else {  
+        Swal.fire({  
+          text: error.response?.data?.message || "An error occurred",  
+          icon: "error"  
+        });  
+      }  
+    }  
+  };
+
+  /* READ USER */
   const [selectedUser, setSelectedUser] = useState(null);
-  const [show1, setShow1] = useState (false);
-  const handleClose1 = () => setShow1(false);
-  const handleShow1 = (row_users) => {
-    setSelectedUser(row_users);
-    setShow1(true);
+  const [showReadModal, setShowReadModal] = useState(false);
+
+  const handleShowReadModal = (user) => {
+    setSelectedUser(user);
+    setShowReadModal(true);
+  };
+
+  const handleCloseReadModal = () => {
+    setSelectedUser(null);
+    setShowReadModal(false);
   };
 
   return (
     <>
-      <Navbar>  
-        <Container>  
-          <Navbar bg="primary" variant="dark" className="custom-navbar">
-            <Container>
-              <Navbar.Brand href="#home">
-                <img src={logo} alt="Logo" className="logo" width="50" />
-                <span>Ampoy's Airline</span>
-              </Navbar.Brand>
-            </Container>
-          </Navbar>
-          <Nav className="me-auto">  
-            <Nav.Link as={Link} to="/services">Services</Nav.Link>
-            <Nav.Link href="#contact">Contact</Nav.Link>  
-            <Nav.Link href="#about_us">About Us</Nav.Link>  
-          </Nav>  
 
-          <Navbar.Collapse id="basic-navbar-nav">  
-            <Nav className="ms-auto">  
-              <NavDropdown title={user ? `User: ${user.username}` : 'Dropdown'} id="basic-nav-dropdown" align="end">  
-                <NavDropdown.Item href="#">Profile</NavDropdown.Item>  
-                <NavDropdown.Item href="#">Settings</NavDropdown.Item>  
-                <NavDropdown.Item href="#" onClick={handleLogout}>Logout</NavDropdown.Item>  
-              </NavDropdown>  
-            </Nav>  
-          </Navbar.Collapse>  
-        </Container>  
-      </Navbar>    
+  <>
+    <Navbar className='navbar-dashboard'>
+      <Container>
+        <Navbar.Brand as={Link} to="/">
+          <img src={logo} alt="Logo" width="50" className="navbar-logo-dashboard" />
+          Ampoy's Airline
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="navbar-link-dashboard">
+            <Nav.Link as={Link} to="/dashboard" className="navbar-link-services active">💻 Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/services" className="navbar-link-services">📝 Services</Nav.Link>
+            <Nav.Link as={Link} to="/home" className="navbar-link-services">🏠 Home</Nav.Link>
+            <Nav.Link as={Link} to="/contact" className="navbar-link-services">📞 Contact</Nav.Link>
+
+            <NavDropdown title={user ? `User: ${user.username}` : 'Dropdown'} id="basic-nav-dropdown" align="end">
+              <NavDropdown.Item as={Link} to="/Profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item href="#">Settings</NavDropdown.Item>
+              <NavDropdown.Item href="#" onClick={handleLogout}>Logout</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  </>
+
 
       <br />
       <div className="dashboard-background">
@@ -221,82 +239,116 @@ function Dashboard() {
       {/* Show data */}
       <div className="container">
         <div className='col-12'>  
-          <Button variant='btn btn-primary mb-2 float-end btn-sm me-2' onClick={handleShow}>Create User</Button>  
+          <Button variant='btn btn-primary mb-2 float-end btn-sm me-2' onClick={() => handleShow()}>Create User</Button>  
         </div>
 
         <table className='table table-bordered'>  
           <thead>  
-            <tr>  
-              <th style={{padding: 1, margin: 0}}>ID</th>  
-              <th style={{padding: 1, margin: 0}}>Username</th>  
-              <th style={{padding: 1, margin: 0}}>Fullname</th>  
-              <th style={{padding: 1, margin: 0}}><center>Action</center></th>  
-            </tr>  
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Username</th>
+              <th>Actions</th>
+            </tr>
           </thead>  
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.user_id}>
+                <td>{user.user_id}</td>
+                <td>{user.fullname}</td>
+                <td>{user.username}</td>
+                <td>
+                  <Button variant="info" size="sm" onClick={() => handleShowReadModal(user)}>View</Button>{' '}
+                  <Button variant="warning" size="sm" onClick={() => handleShow(user)}>Edit
 
-          <tbody>  
-            {  
-              users.length > 0 && (  
-                users.map((row_users, key) => (  
-                  <tr key={row_users.user_id}>  
-                    <td style={{padding: 1, margin: 0}}>{row_users.user_id}</td>  
-                    <td style={{padding: 1, margin: 0}}>{row_users.username}</td>  
-                    <td style={{padding: 1, margin: 0}}>{row_users.fullname}</td>  
-                    <td style={{padding: 1, margin: 0}}>  
-                      <center>  
-                        <Button variant='secondary' size='sm' onClick={() => handleShow1(row_users)}>Read</Button> &nbsp;
-                        <Button variant='warning' size='sm' onClick={() => handleShow(row_users)}>Update</Button> &nbsp;
-                        <Button variant='danger' size='sm' onClick={() => deleteUser(row_users.user_id)}>Delete</Button>  
-                      </center>  
-                    </td>  
-                  </tr>  
-                ))  
-              )
-            }  
+                  </Button>{' '}
+                  <Button variant="danger" size="sm" onClick={() => deleteUser(user.user_id)}>Delete</Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
-        </table>  
+        </table>
       </div>
 
-      <Modal show={show} onHide={handleClose}>  
-        <Modal.Header closeButton>  
-          <Modal.Title>Users</Modal.Title>  
-        </Modal.Header>  
+      {/* Create and Edit Modal */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{currentUserId ? 'Edit User' : 'Create User'}</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={currentUserId ? updateUser : createUser}>
+          <Modal.Body>
+            <Form.Group className="mb-3">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter full name"
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
+                isInvalid={!!validationError.fullname}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validationError.fullname}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                isInvalid={!!validationError.username}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validationError.username}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                isInvalid={!!validationError.password}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validationError.password}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="primary" type="submit">
+              {currentUserId ? 'Update User' : 'Create User'}
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
 
-        <Modal.Body>  
-          <Form onSubmit={createUser}>  
-            <Row>  
-              <Col>  
-                <Form.Group controlId="Name">  
-                  <Form.Label>Fullname</Form.Label>  
-                  <Form.Control type="text" value={fullname} onChange={(event)=>{setFullname(event.target.value)}} required />  
-                </Form.Group>  
-              </Col>  
-            </Row>  
-
-            <Row>  
-              <Col>  
-                <Form.Group controlId="Username">  
-                  <Form.Label>Username</Form.Label>  
-                  <Form.Control type="text" value={username} onChange={(event)=>{setUsername(event.target.value)}} required />  
-                </Form.Group>  
-              </Col>  
-            </Row>  
-
-            <Row>  
-              <Col>  
-                <Form.Group controlId="Password">  
-                  <Form.Label>Password</Form.Label>  
-                  <Form.Control type="password" value={password} onChange={(event)=>{setPassword(event.target.value)}} required />  
-                </Form.Group>  
-              </Col>  
-            </Row>  
-
-            <Button variant="primary" className="mt-2" size="sm" type="submit">Save</Button>  
-          </Form>  
-        </Modal.Body>  
+      {/* Read User Modal */}
+      <Modal show={showReadModal} onHide={handleCloseReadModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>View User Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedUser && (
+            <>
+              <p><strong>Full Name:</strong> {selectedUser.fullname}</p>
+              <p><strong>Username:</strong> {selectedUser.username}</p>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseReadModal}>
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
-  );  
+  );
 }
 
 export default Dashboard;

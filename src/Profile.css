@@ -1,0 +1,185 @@
+/* Basic styling for the profile form container */
+.profile-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+/* Profile form */
+.profile-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Form group to structure the inputs */
+.form-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label style */
+.form-group label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+/* Input fields with styling */
+.form-group input,
+.form-group textarea {
+    font-size: 16px;
+    padding: 14px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 8px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Focus effect for inputs */
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    background-color: #fff;
+}
+
+/* Placeholder styling */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #aaa;
+}
+
+/* Textarea with more height for better user experience */
+.form-group textarea {
+    resize: vertical;
+    height: 160px;
+}
+
+/* File input styling */
+.form-group input[type="file"] {
+    padding: 12px;
+    border: none;
+    background: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Button style */
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+/* Button hover effect */
+.submit-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Styling for the saved profile data */
+.saved-profile {
+    margin-top: 35px;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.saved-profile h3 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.saved-profile p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    padding-left: 15px;
+    border-left: 5px solid #007bff;
+    margin-left: 10px;
+}
+
+.saved-profile strong {
+    font-weight: 700;
+    color: #007bff;
+}
+
+/* Profile Picture Styling */
+.profile-picture {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #007bff;
+    transition: transform 0.3s ease, border 0.3s ease;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1);
+    border-color: #0056b3;
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+    .profile-container {
+        padding: 20px;
+    }
+
+    .profile-form {
+        padding: 20px;
+    }
+
+    .saved-profile {
+        padding: 20px;
+    }
+
+    .saved-profile h3 {
+        font-size: 22px;
+    }
+
+    .saved-profile p {
+        font-size: 15px;
+    }
+
+    .submit-btn {
+        font-size: 15px;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+}

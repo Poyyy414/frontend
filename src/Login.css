@@ -1,35 +1,217 @@
-/* Ensure the form and background are clearly visible */
+/* Background and Form Container */
 .background-container {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6a4cfc, #4e73df); /* Vibrant gradient for better contrast */
+  overflow: hidden;
+  margin-top: -5px;
+  top:-2px;
 }
 
+/* Form Styling */
 .login_form {
-  background: rgba(255, 255, 255, 0.8);  /* Slight background color */
-  padding: 30px;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9); /* Increased opacity for better readability */
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
-.card {
-  border: none;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+/* Hover Effect for Form */
+.login_form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.95); /* Lightens on hover for effect */
 }
 
+/* Form Inputs */
 .form-control-sm {
-  background-color: white; /* Ensure inputs are clear */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease;
 }
 
+/* Focus State for Form Inputs */
+.form-control-sm:focus {
+  border-color: #6a4cfc; /* Vibrant purple for focus */
+  box-shadow: 0 0 5px rgba(106, 76, 252, 0.5); /* Soft glow effect */
+  outline: none;
+}
+
+/* Button Styling */
 .btn {
   cursor: pointer;
-}
-
-.login-logo h2 {
-  font-size: 22px;
-  font-weight: bold;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
 }
 
 .bg-custom {
-  background-color: #28a745; /* Green button color */
+  background-color: #1a0486; /* Vibrant purple for buttons */
+  color: white;
+  border: none;
 }
+
+/* Hover and Active Effects for Button */
+.bg-custom:hover {
+  background-color: #5b3fc4;
+  transform: scale(1.05);
+}
+
+.bg-custom:active {
+  background-color: #4a2b96;
+  transform: scale(1);
+}
+
+/* Logo Text */
+.login-logo h2 {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Subtle Animation on Form */
+.login_form {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Placeholder Text Styling */
+.form-control-sm::placeholder {
+  color: #999;
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* General Text Styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+/* Error or Warning Message Styling */
+.alert {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.alert-warning {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.alert-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Navbar Styling */
+.custom-navbar {
+  background-color: #022688; /* Aqua Blue */
+  padding: 0.8rem 2rem; /* Increased padding for better spacing */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 0px 0px 12px 12px; /* Rounded bottom corners for a soft finish */
+}
+
+/* Navbar Branding */
+.custom-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+/* Logo Styling */
+.custom-navbar .navbar-brand img {
+  margin-right: 10px; /* Space between logo and text */
+  width: 40px; /* Smaller logo */
+  height: auto;
+}
+
+/* Navbar Text and Hover Effect */
+.custom-navbar .navbar-brand:hover {
+  color: #f7f7f7; /* Light color when hovering over the brand name */
+  text-decoration: none; /* No underline effect on hover */
+}
+
+/* Navbar Links (if any) */
+.custom-navbar .navbar-nav .nav-link {
+  color: #f7f7f7;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 15px; /* Adds space between links */
+  transition: color 0.3s ease;
+}
+
+.custom-navbar .navbar-nav .nav-link:hover {
+  color: #ffffff; /* Changes to white when hovered */
+  text-decoration: none; /* No underline on hover */
+}
+
+/* Mobile Navbar */
+@media (max-width: 768px) {
+  .custom-navbar {
+    padding: 1rem;
+  }
+
+  .custom-navbar .navbar-brand {
+    font-size: 20px;
+  }
+
+  .custom-navbar .navbar-nav .nav-link {
+    font-size: 14px;
+  }
+}
+/* Custom styles for dark blue button */
+.dark-blue-btn {
+  background-color: #003366; /* Dark blue color */
+  border-color: #003366; /* Match the border color */
+  color: white;
+}
+
+.dark-blue-btn:hover {
+  background-color: #002244; /* Slightly darker blue on hover */
+  border-color: #002244;
+}
+
+.dark-blue-btn:disabled {
+  background-color: #2c3e50; /* Darker color when disabled */
+  border-color: #2c3e50;
+}
+
