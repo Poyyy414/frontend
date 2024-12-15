@@ -4,18 +4,18 @@
 }
 
 .navbar-brand {
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
   font-weight: bold;
   font-size: 1.5rem;
 }
 
 .navbar a {
-  color: white !important;
+  color: rgb(129, 129, 129) !important;
   text-decoration: none;
 }
 
 .navbar a:hover {
-  color: #cccccc !important; /* Light gray on hover */
+  color: #dbdf03 !important; /* Light gray on hover */
 }
 
 /* Background for the login/signup container */
@@ -94,3 +94,4 @@ form .form-control:focus {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
+
