@@ -19,7 +19,6 @@ import { API_ENDPOINT } from './Api.jsx';
 function Login() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [isSignup, setIsSignup] = useState(false); // Toggle between login and signup
   const [loading, setLoading] = useState(false); // Manage loading state
 
   /* Verify if User In Session in LocalStorage */
@@ -65,33 +64,10 @@ function Login() {
     }
   };
 
-  /* Signup State and Methods */
-  const [fullname, setFullname] = useState('');
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await axios.post(`${API_ENDPOINT}/auth/register`, {
-        fullname,
-        username,
-        password,
-      });
-
-      localStorage.setItem('token', JSON.stringify(response));
-      setError('');
-      setLoading(false);
-      navigate('/dashboard');
-    } catch (error) {
-      setError('Signup failed. Please try again.');
-      setLoading(false);
-    }
-  };
-
   return (
     <>
       {/* Navbar */}
-      <Navbar bg="primary" data-bs-theme="dark">
+      <Navbar className="custom-navbar" data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="#home">
             <img src={logo} alt="Ampoy's Airline Logo" width="40" />
@@ -112,7 +88,7 @@ function Login() {
           alignItems: 'center',
         }}
       >
-        {/* Login or Signup Form */}
+        {/* Login Form */}
         <Container>
           <Row className="justify-content-md-center">
             <Col md={4}>
@@ -127,122 +103,52 @@ function Login() {
                   &nbsp;
                   <div className="card">
                     <div className="card-body login-card-body">
-                      {isSignup ? (
-                        <Form onSubmit={handleSignup}>
-                          <Form.Group controlId="formFullname">
-                            <Form.Label>Full Name:</Form.Label>
-                            <Form.Control
-                              className="form-control-sm rounded-0"
-                              type="text"
-                              placeholder="Enter Full Name"
-                              value={fullname}
-                              onChange={(e) => setFullname(e.target.value)}
-                              required
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="formUsername">
-                            <Form.Label>Username:</Form.Label>
-                            <Form.Control
-                              className="form-control-sm rounded-0"
-                              type="text"
-                              placeholder="Enter Username"
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
-                              required
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="formPassword">
-                            <Form.Label>Password:</Form.Label>
-                            <Form.Control
-                              className="form-control-sm rounded-0"
-                              type="password"
-                              placeholder="Enter Password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              required
-                            />
-                          </Form.Group>
-                          <br />
-                          <Form.Group controlId="formsButton">
-                            {error && <p style={{ color: 'red' }}>{error}</p>}
-                            <Button
-                              variant="primary"
-                              className="btn btn-block bg-custom btn-flat rounded-0"
-                              size="sm"
-                              type="submit"
-                              disabled={loading}
-                            >
-                              {loading ? (
-                                <Spinner
-                                  animation="border"
-                                  size="sm"
-                                  role="status"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                'Signup'
-                              )}
-                            </Button>
-                          </Form.Group>
-                        </Form>
-                      ) : (
-                        <Form onSubmit={handleLogin}>
-                          <Form.Group controlId="formUsername">
-                            <Form.Label>Username:</Form.Label>
-                            <Form.Control
-                              className="form-control-sm rounded-0"
-                              type="text"
-                              placeholder="Enter Username"
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
-                              required
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="formPassword">
-                            <Form.Label>Password:</Form.Label>
-                            <Form.Control
-                              className="form-control-sm rounded-0"
-                              type="password"
-                              placeholder="Enter Password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              required
-                            />
-                          </Form.Group>
-                          <br />
-                          <Form.Group controlId="formsButton">
-                            {error && <p style={{ color: 'red' }}>{error}</p>}
-                            <Button
-                              variant="primary"
-                              className="btn btn-block bg-custom btn-flat rounded-0"
-                              size="sm"
-                              type="submit"
-                              disabled={loading}
-                            >
-                              {loading ? (
-                                <Spinner
-                                  animation="border"
-                                  size="sm"
-                                  role="status"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                'Login'
-                              )}
-                            </Button>
-                          </Form.Group>
-                        </Form>
-                      )}
-                      <div className="mt-3 text-center">
-                        <Button
-                          variant="link"
-                          onClick={() => setIsSignup(!isSignup)}
-                        >
-                          {isSignup
-                            ? 'Already have an account? Login'
-                            : "Don't have an account? Signup"}
-                        </Button>
-                      </div>
+                      <Form onSubmit={handleLogin}>
+                        <Form.Group controlId="formUsername">
+                          <Form.Label>Username:</Form.Label>
+                          <Form.Control
+                            className="form-control-sm rounded-0"
+                            type="text"
+                            placeholder="Enter Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                          />
+                        </Form.Group>
+                        <Form.Group controlId="formPassword">
+                          <Form.Label>Password:</Form.Label>
+                          <Form.Control
+                            className="form-control-sm rounded-0"
+                            type="password"
+                            placeholder="Enter Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                          />
+                        </Form.Group>
+                        <br />
+                        <Form.Group controlId="formsButton">
+                          {error && <p style={{ color: 'red' }}>{error}</p>}
+                          <Button
+                            variant="primary"
+                            className="btn btn-block bg-custom btn-flat rounded-0"
+                            size="sm"
+                            type="submit"
+                            disabled={loading}
+                          >
+                            {loading ? (
+                              <Spinner
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                              />
+                            ) : (
+                              'Login'
+                            )}
+                          </Button>
+                        </Form.Group>
+                      </Form>
                     </div>
                   </div>
                 </div>
