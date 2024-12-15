@@ -70,7 +70,7 @@
     padding: 12px 24px;
     border-radius: 8px;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    color: white;
+    color: rgb(0, 0, 0);
     cursor: pointer;
 }
 
@@ -86,7 +86,7 @@
     top: 15px; /* Adjusts its position from the top */
     right: 20px; /* Adjusts its position from the right */
     background-color: #d9534f; /* Red color for logout button */
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 10px 20px;
     border-radius: 8px;
     font-weight: 600;
