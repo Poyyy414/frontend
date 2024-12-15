@@ -8,6 +8,10 @@ import palawan from './assets/palawan.jpeg';
 import baguio from './assets/Baguio.jpg';
 import yin from './assets/yin.jpg';
 import zoey from './assets/zoey.jpg';
+import albay from './assets/albay.jpg';
+import batanes from './assets/batanes.jpeg';
+import bohol from './assets/bohol.jpg';
+import vigan from './assets/vigan.jpg';
 
 function Home() {
     return (
@@ -50,6 +54,38 @@ function Home() {
                     <Carousel.Caption>
                         <h3>Baguio City</h3>
                         <p>"Baguio: The cool heart of the Philippines!"</p>
+                    </Carousel.Caption>  
+                </Carousel.Item>
+                <Carousel.Item>
+                    <img className="carousel-image" src={albay} alt=
+"Albay: Where Nature's Beauty Meets Fiery Passion!" />
+                    <Carousel.Caption>
+                        <h3>Albay</h3>
+                        <p>
+                        "Albay: Where Nature's Beauty Meets Fiery Passion!"</p>
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <img className="carousel-image" src={batanes} alt=
+"Batanes: Where Tranquility Meets Timeless Beauty!" />
+                    <Carousel.Caption>
+                        <h3>Batanes</h3>
+                        <p>
+                        "Batanes: Where Tranquility Meets Timeless Beauty!"</p>
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <img className="carousel-image" src={bohol} alt="Bohol: Beyond Wonders, Nature’s Masterpiece!" />
+                    <Carousel.Caption>
+                        <h3>Bohol</h3>
+                        <p>"Bohol: Beyond Wonders, Nature’s Masterpiece!"</p>
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <img className="carousel-image" src={vigan} alt="Vigan: Where History Lives, Heritage Thrives!" />
+                    <Carousel.Caption>
+                        <h3>Vigan</h3>
+                        <p>"Vigan: Where History Lives, Heritage Thrives!"</p>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>

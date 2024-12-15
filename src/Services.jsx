@@ -8,6 +8,8 @@ import Swal from 'sweetalert2'; // Import SweetAlert2
 import baggage from './assets/baggage.jpg';
 import checkin from './assets/check-in.jpg';
 import travelInsurance from './assets/travel-insurance.jpg';
+import phairline from './assets/phairline.png';
+import cebupacific from './assets/cebupacific.png';
 
 const FlightCard = ({ route, departDate, departTime, returnDate, returnTime, price, airlineLogo, isCheapest, isQuickest, buttonLabel, onBook }) => {
   return (
@@ -27,8 +29,8 @@ const FlightCard = ({ route, departDate, departTime, returnDate, returnTime, pri
 };
 
 const Services = () => {
-  const [departureCity, setDepartureCity] = useState("Cagayan de Oro (CGY)");
-  const [arrivalCity, setArrivalCity] = useState("Cebu City (CEB)");
+  const [departureCity, setDepartureCity] = useState("Cagayan de Oro");
+  const [arrivalCity, setArrivalCity] = useState("Cebu");
   const [departureDate, setDepartureDate] = useState("2024-12-18");
   const [returnDate, setReturnDate] = useState("2025-01-10");
   const [onlyDirectFlights, setOnlyDirectFlights] = useState(false);
@@ -63,7 +65,7 @@ const Services = () => {
       returnDate: 'Sun 2/16',
       returnTime: '12:20 am-1:45 am',
       price: 'P2,506',
-      airlineLogo: airasia,
+      airlineLogo: phairline,
       isCheapest: true,
       isQuickest: false,
       buttonLabel: 'Book Now'
@@ -87,45 +89,43 @@ const Services = () => {
       returnDate: 'Wed 1/29',
       returnTime: '1:45 pm - 3:05 pm',
       price: 'Free',
-      airlineLogo: airasia,
+      airlineLogo: cebupacific,
       isCheapest: false,
       isQuickest: true,
       buttonLabel: 'Book Now'
     },
     {
-      route: 'Calabanga ✈︎ Universe 13 ',
+      route: 'Naga City ✈︎ Albay',
       departDate: 'Sat 1/25',
       departTime: '4:00 am - 5:30 am',
       returnDate: 'Wed 1/29',
       returnTime: '1:45 pm - 3:05 pm',
       price: 'P1,000,000,000',
-      airlineLogo: airasia,
+      airlineLogo: logo,
       isCheapest: false,
       isQuickest: true,
       buttonLabel: 'Book Now'
     },
-
     {
-      route: 'Calabanga ✈︎ Universe 13 ',
+      route: 'Calabanga ✈︎ Tinambac ',
       departDate: 'Sat 1/25',
       departTime: '4:00 am - 5:30 am',
       returnDate: 'Wed 1/29',
       returnTime: '1:45 pm - 3:05 pm',
       price: 'P1,000,000,000',
-      airlineLogo: airasia,
+      airlineLogo: cebupacific,
       isCheapest: false,
       isQuickest: true,
       buttonLabel: 'Book Now'
     },
-
     {
-      route: 'Calabanga ✈︎ Universe 13 ',
+      route: 'Davao City ✈︎ Ilo-Ilo City ',
       departDate: 'Sat 1/25',
       departTime: '4:00 am - 5:30 am',
       returnDate: 'Wed 1/29',
       returnTime: '1:45 pm - 3:05 pm',
       price: 'P1,000,000,000',
-      airlineLogo: airasia,
+      airlineLogo: phairline,
       isCheapest: false,
       isQuickest: true,
       buttonLabel: 'Book Now'
@@ -172,6 +172,12 @@ const Services = () => {
     });
   };
 
+  const cities = [
+    "Cagayan de Oro", "Manila", "Palawan", "Baguio", "Pili", 
+    "Calabanga", "Naga", "Davao", "Cebu", "Tagbilaran", 
+    "Iloilo", "Bacolod", "Bohol", "Boracay", "Zamboanga"
+  ];
+
   return (
     <div>
       <nav className="navbar-services">
@@ -180,10 +186,9 @@ const Services = () => {
           <Link to="/" className="navbar-brand-services">Ampoy's Airline</Link>
           <div className="navbar-links-services">
             <Link to="/dashboard" className="navbar-link-services">💻Dashboard</Link>
-            <Link to="/servies" className="navbar-link-services active">📝Services</Link>
+            <Link to="/services" className="navbar-link-services active">📝Services</Link>
             <Link to="/home" className="navbar-link-services">🏠︎Home</Link>
             <Link to="/contact" className="navbar-link-services">📞 Contact</Link>
-            
           </div>
         </div>
       </nav>
@@ -195,19 +200,25 @@ const Services = () => {
         <form onSubmit={handleSubmit} className="services-form">
           <label>
             Departure City:
-            <input
-              type="text"
+            <select
               value={departureCity}
               onChange={(e) => setDepartureCity(e.target.value)}
-            />
+            >
+              {cities.map((city, index) => (
+                <option key={index} value={city}>{city}</option>
+              ))}
+            </select>
           </label>
           <label>
             Arrival City:
-            <input
-              type="text"
+            <select
               value={arrivalCity}
               onChange={(e) => setArrivalCity(e.target.value)}
-            />
+            >
+              {cities.map((city, index) => (
+                <option key={index} value={city}>{city}</option>
+              ))}
+            </select>
           </label>
           <label>
             Departure Date:

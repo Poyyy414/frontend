@@ -1,26 +1,23 @@
-/* General Styles */
-.container-services {
-  padding: 25px;
-  background-color: #f9f9f9; /* Slightly lighter background */
-  text-align: center;
-  border-radius: 15px;
-  margin-top: 40px;
-  margin-left: 40px;
-  margin-right: 40px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
-  font-family: 'Open Sans', sans-serif; /* Clean, modern font */
+.services-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 
 .container-services h1 {
-  font-size: 32px;
-  color: #222; /* Darker heading for contrast */
-  margin-bottom: 25px;
-  font-weight: 700;
-  font-family: 'Poppins', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
 }
-
 .services-form {
   background-color: white;
   padding: 25px;
@@ -258,7 +255,6 @@
   height: 220px;
   border-radius: 15px;
   transition: transform 0.3s ease;
- 
 }
 
 .service-card img:hover {
@@ -287,3 +283,85 @@
   letter-spacing: 1px;
 }
 
+/* Departure and Arrival City Styles */
+.departure-arrival-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.departure-city, .arrival-city {
+  width: 48%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.departure-city label, .arrival-city label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #666;
+  font-weight: 600;
+}
+
+.departure-city select, .arrival-city select {
+  padding: 12px;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.departure-city select:focus, .arrival-city select:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+.container-services {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.services-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.services-form button:hover {
+  background-color: #0056b3;
+}
+
+
+.services-form input[type="checkbox"] {
+  width: auto;
+}
+
+.services-form input[type="date"] {
+  width: auto;
+}
+
+.container-services .services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 40px;
+  text-align: center;
+}
