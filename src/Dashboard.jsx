@@ -221,7 +221,7 @@ function Dashboard() {
 
             <NavDropdown className="dropdown-basic-nav-dashboard" title={user ? `User: ${user.username}` : 'Dropdown'} id="basic-nav-dropdown" align="end">
               <NavDropdown.Item as={Link} to="/Profile">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#">Settings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/Settings">Settings</NavDropdown.Item>
               <NavDropdown.Item href="#" onClick={handleLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>

@@ -11,6 +11,7 @@ import Services from './Services';  // Ensure Services is imported
 import Home from './Home';
 import Contact from './Contact';
 import Profile from './Profile'; // Import Profile correctly
+import Settings from './Settings';
 
 function App() {  
   return (  
@@ -34,6 +35,7 @@ function App() {
 
             {/* Route for the profile page */}
             <Route path="/profile" element={<Profile />} /> {/* Fixed Profile Route */}
+            <Route path="/settings" element={<Settings />} />
           </Routes>  
         </Col>  
       </Row>  

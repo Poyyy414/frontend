@@ -1,0 +1,105 @@
+/* Basic Styles */
+.settings-page {
+    padding-top: 20px;
+  }
+  
+  .settings-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .settings-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .settings-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  input[type="checkbox"] {
+    margin-top: 10px;
+  }
+  
+  select {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  button.submit-btn {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button.submit-btn:hover {
+    background-color: #002244;
+  }
+  
+  /* Dark Mode Styles */
+  .settings-page.dark-mode {
+    background-color: #333;
+    color: white;
+  }
+  
+  .settings-page.dark-mode .settings-container {
+    background-color: #444;
+    color: white;
+  }
+  
+  .settings-page.dark-mode .submit-btn {
+    background-color: #002244;
+  }
+  
+  .settings-page.dark-mode .submit-btn:hover {
+    background-color: #003366;
+  }
+  
+  /* Navbar custom styles */
+  .navbar-dark-blue {
+    background-color: #003366;
+  }
+  
+  .navbar-dark-blue .navbar-nav .nav-link {
+    color: white;
+  }
+  
+  .navbar-dark-blue .navbar-brand {
+    color: white;
+    font-size: 1.5em;
+  }
+  
+  .navbar-dark-blue .navbar-brand img {
+    margin-right: 10px;
+  }
+  
+  .navbar-dark-blue .nav-link:hover {
+    color: #ffdd00;
+  }
+  
+  .navbar-dark-blue .nav-link {
+    font-size: 1.1em;
+  }
+  

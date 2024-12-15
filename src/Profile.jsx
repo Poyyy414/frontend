@@ -66,23 +66,23 @@ const Profile = () => {
   return (
     <>
       {/* Navbar */}
-      <Navbar bg="primary" variant="dark">
+      <Navbar className="navbar-dark-blue" variant="dark">
         <Container>
           <Navbar.Brand href="#home">
             <img src={logo} alt="Logo" className="logo" width="50" />
             <span>Ampoy's Airline</span>
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-            <Nav.Link as={Link} to="/home">Home</Nav.Link>
-            <Nav.Link as={Link} to="/services">Services</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
+            <Nav.Link as={Link} to="/dashboard">💻Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/home">🏠Home</Nav.Link>
+            <Nav.Link as={Link} to="/services">📝Services</Nav.Link>
+            
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <NavDropdown title="User" id="basic-nav-dropdown" align="end">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#">Settings</NavDropdown.Item>
+                <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
                 <NavDropdown.Item href="#">Logout</NavDropdown.Item>
               </NavDropdown>
             </Nav>
